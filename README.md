@@ -1,9 +1,10 @@
-# Simple Deployment for Redis Enterprise Pack (Redis<sup>e</sup> Pack) on Kubernetes on Google Cloud 
+# Step by Step Deployment for Redis Enterprise Pack (Redis<sup>e</sup> Pack) on Kubernetes on Google Cloud 
 
-Simple automated cluster deployment for a Redis Enterprise Pack (Redis<sup>e</sup> Pack) deployment on Docker. Ideal for build up and teardown of test environments or functional tests. Works with Redis<sup>e</sup> Pack v4.4 or later. 
+Here is a simple step by step cluster deployment for a Redis Enterprise Pack (Redis<sup>e</sup> Pack) on Kubernetes using Google Cloud.  
 
 ## Requirements
 - MacOS Sierra
+- Google Cloud SDK - https://cloud.google.com/sdk/
 
 ## Getting Started
 - Create a Kubernetes Cluster on Google Cloud (see pict)
