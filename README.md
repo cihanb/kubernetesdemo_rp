@@ -4,7 +4,7 @@ Kubernetes provides simple orchestration with containers and has been widely ada
 Redis is the most popular database used with Docker containers. Redis Enterprise Pack extends open source Redis and delivers stable high performance, linear scaling and high availability with significant operational savings.
 
 # Step by Step Deployment for (Redis<sup>e</sup> Pack) on Kubernetes on Google Cloud 
-We will go through XXX steps to set up our cluster with Redis Enterprise Pack (Redis<sup>e</sup> Pack)
+We will go through 4 steps to set up our cluster with Redis Enterprise Pack (Redis<sup>e</sup> Pack)
 * Step #1 - Create a kubernetes cluster on Google Cloud
 * Step #2 - Deploy the Redis Enterprise Pack (Redis<sup>e</sup> Pack) containers to Kubernetes cluster
 * Step #3 - Setup Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster
