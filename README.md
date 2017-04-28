@@ -22,20 +22,27 @@ To define your kubernetes cluster, give it a name and keep the size of the clust
 
 Note: it may take a few mins to create the cluster. Ensure the kubernetes cluster creation is complete before proceeding to the next step.
 
-For best placement, we require Redis Enterprise Pack (Redis<sup>e</sup> Pack) pods to be placed on seperate kubernetes nodes. This ensures better availability when cluster nodes fail. Placing multiple Redis Enterprise Pack (Redis<sup>e</sup> Pack) nodes in the same physical host can cause multiple nodes to fail at once and may result in availability and data loss. To ensure we can garantee better placement, we need to upgrade the kubernetes cluster to 1.6.2 or better. You can do the upgrade in the details page of the kubernetes cluster deployment we just created. 
+For best placement, we require Redis Enterprise Pack (Redis<sup>e</sup> Pack) pods to be placed on seperate kubernetes nodes. This ensures better availability when cluster nodes fail. Placing multiple Redis Enterprise Pack (Redis<sup>e</sup> Pack) nodes in the same physical host can cause multiple nodes to fail at once and may result in availability and data loss. To ensure we can garantee better placement, we need to upgrade the kubernetes cluster to **1.6.2** or better. You can do the upgrade in the details page of the kubernetes cluster deployment we just created. 
 
 ![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/view-cluster.jpeg)
 
+Finally to finish the kubernetes deployment, you need to get the kubernetes console up and running and start the kubernetes proxy. on the terminal window, run the folowing commands;
+```
+gcloud auth login 
+```
+Connect to the kubernetes cluster
+```
+gcloud container clusters get-credentials cluster-1 --zone europe-west1-c --project speedy-lattice-166011
+```
+The output will read; 
+_#Fetching cluster endpoint and auth data._
+_#kubeconfig entry generated for cluster-1._
+And finally start the kubernetes cluster
+```
+kubectl proxy
+```
 
-  #note: upgrade the master cluster version to version 1.6.2
-  #authenticate to the cluster
-  - gcloud auth login 
-  - Connect to the cluster 
-  > gcloud container clusters get-credentials cluster-1 --zone europe-west1-c --project speedy-lattice-166011
-    > Fetching cluster endpoint and auth data.
-    > kubeconfig entry generated for cluster-1.
-  - start the proxy
-  > kubectl proxy
+
 - Feed the .yaml file for the Redis Enterprise Pack provisioning
   > kubectl apply -f redis-enterprise.yaml
     > deployment "redispack-deployment" created
