@@ -5,10 +5,10 @@ Redis is the most popular database used with Docker containers. Redis Enterprise
 
 # Step by Step Deployment for (Redis<sup>e</sup> Pack) on Kubernetes on Google Cloud 
 We will go through XXX steps to set up our cluster with Redis Enterprise Pack (Redis<sup>e</sup> Pack)
-Step #1 - Create a kubernetes cluster on Google Cloud
-Step #2 - Deploy the Redis Enterprise Pack (Redis<sup>e</sup> Pack) containers to Kubernetes cluster
-Step #3 - Setup Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster
-Step #4 - Create a Redis database and test your connectivity
+* Step #1 - Create a kubernetes cluster on Google Cloud
+* Step #2 - Deploy the Redis Enterprise Pack (Redis<sup>e</sup> Pack) containers to Kubernetes cluster
+* Step #3 - Setup Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster
+* Step #4 - Create a Redis database and test your connectivity
 
 ## Requirements
 When performing the steps I used latest Google Cloud SDK - https://cloud.google.com/sdk/ on MacOS. There may be slight differences with other operating systems.
@@ -35,26 +35,32 @@ Connect to the kubernetes cluster
 gcloud container clusters get-credentials cluster-1 --zone europe-west1-c --project speedy-lattice-166011
 ```
 The output will read; 
-_#Fetching cluster endpoint and auth data._
-_#kubeconfig entry generated for cluster-1._
+_# Fetching cluster endpoint and auth data._
+_# kubeconfig entry generated for cluster-1._
 And finally start the kubernetes cluster
 ```
 kubectl proxy
 ```
+##Step #2 - Deploy the Redis Enterprise Pack (Redis<sup>e</sup> Pack) containers to Kubernetes cluster
+You now need to feed the container yaml file to provision Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster
+```
+kubectl apply -f redis-enterprise.yaml
+```
+If the deployment is successful, the output should look like this;
+_# deployment "redispack-deployment" created_
+_# service "redispack" created_
 
-
-- Feed the .yaml file for the Redis Enterprise Pack provisioning
-  > kubectl apply -f redis-enterprise.yaml
-    > deployment "redispack-deployment" created
-    > service "redispack" created
-- Provision cluster
-# list nodes
-  > kubectl get po
+You can now see the list of container nodes deployed on the kubernetes cluster. Simply run the following to see the list of nodes
+```
+kubectl get po
+```
+The output will look something like this;
+```
 NAME                                   READY     STATUS    RESTARTS   AGE
 redispack-deployment-709212938-765lg   1/1       Running   0          7s
 redispack-deployment-709212938-k8njr   1/1       Running   0          7s
 redispack-deployment-709212938-kcjd7   1/1       Running   0          7s
-
+```
 
 #create cluster
 #apply workaround - bind to 0.0.0.0
