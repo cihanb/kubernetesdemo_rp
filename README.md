@@ -41,7 +41,7 @@ And finally start the kubernetes cluster
 ```
 kubectl proxy
 ```
-##Step #2 - Deploy the Redis Enterprise Pack (Redis<sup>e</sup> Pack) containers to Kubernetes cluster
+## Step #2 - Deploy the Redis Enterprise Pack (Redis<sup>e</sup> Pack) containers to Kubernetes cluster
 You now need to feed the container yaml file to provision Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster
 ```
 kubectl apply -f redis-enterprise.yaml
@@ -62,66 +62,49 @@ redispack-deployment-709212938-k8njr   1/1       Running   0          7s
 redispack-deployment-709212938-kcjd7   1/1       Running   0          7s
 ```
 
-#create cluster
-#apply workaround - bind to 0.0.0.0
+## Step #3 - Setup Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster
+We are now ready to create the Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster. There is one small change that needs to be done to the container to get networking to work properly: we need to change the css binding to 0.0.0.0. To do this you ned to run the following in each container with each iteration using the pods name from the _kubectl get po_ output above.
+```
 kubectl exec -it redispack-deployment-709212938-765lg -- bash
-    > sudo su -
-    > sed ‘s/bind 127.0.0.1/bind 0.0.0.0/g’ -i /opt/redislabs/config/ccs-redis.conf
-    > cnm_ctl restart
-  > kubectl exec -it redispack-deployment-709212938-765lg "/opt/redislabs/bin/rladmin" cluster create name cluster.local username cihan@redislabs.com password redislabs123 flash_enabled
+# sudo su -
+# sed ‘s/bind 127.0.0.1/bind 0.0.0.0/g’ -i /opt/redislabs/config/ccs-redis.conf
+# cnm_ctl restart
+```
 
-#get node ip
-  kubectl exec -it redispack-deployment-709212938-765lg ifconfig | grep "inet addr"
+With this, lets provision the first node or the Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster.
+```
+kubectl exec -it redispack-deployment-709212938-765lg "/opt/redislabs/bin/rladmin" cluster create name cluster.local username cihan@redislabs.com password redislabs123 flash_enabled
+```
 
-#add node#2
-  kubectl exec -it redispack-deployment-709212938-k8njr bash
-    > sudo su -
-    > sed ‘s/bind 127.0.0.1/bind 0.0.0.0/g’ -i /opt/redislabs/config/ccs-redis.conf
-    > cnm_ctl restart
-  > kubectl exec -it redispack-deployment-709212938-k8njr "/opt/redislabs/bin/rladmin" cluster join username cihan@redislabs.com password redislabs123 nodes 10.0.2.10 flash_enabled
+We will need the ip address of the first node to be able to instruct the following nodes to join the cluster.
+```
+kubectl exec -it redispack-deployment-709212938-765lg ifconfig | grep "inet addr"
+```
+In my case the output was 10.0.2.10.
+Lets add node 2 and 3 to the cluster 
+```
+kubectl exec -it redispack-deployment-709212938-k8njr "/opt/redislabs/bin/rladmin" cluster join username cihan@redislabs.com password redislabs123 nodes 10.0.2.10 flash_enabled
+```
+```
+kubectl exec -it redispack-deployment-709212938-kcjd7 "/opt/redislabs/bin/rladmin" cluster join username cihan@redislabs.com password redislabs123 nodes 10.0.2.10 flash_enabled
+```
 
-#add node#3
-  kubectl exec -it redispack-deployment-709212938-kcjd7  bash
-    > sudo su -
-    > sed ‘s/bind 127.0.0.1/bind 0.0.0.0/g’ -i /opt/redislabs/config/ccs-redis.conf
-    > cnm_ctl restart
-  > kubectl exec -it redispack-deployment-709212938-kcjd7 "/opt/redislabs/bin/rladmin" cluster join username cihan@redislabs.com password redislabs123 nodes 10.0.2.10 flash_enabled
-
-#create database
+## Step #4 - Create a Redis database and test your connectivity
+We are now ready to create the database and connect to it. The following curl command can be used to create a database on port 12000. the database will be named _sample-db_.
+```
 kubectl exec -it redispack-deployment-709212938-765lg bash
-curl -k -u "cihan@redislabs.com:redislabs123" --request POST --url "https://localhost:9443/v1/bdbs" --header 'content-type: application/json' --data '{"name":"sample-db","type":"redis","memory_size":1073741824,"port":12000}'
-
-#test connection
-/opt/redislabs/bin/redis-cli -p 12000
-127.0.0.1:12000> set a 1
-OK
-127.0.0.1:12000> get a
-"1"
-127.0.0.1:12000>
-
-
-
-
-
-
-
-
-
-- Modify ```settings.sh``` to change default cluster settings
-  - FQDN (full qualified domain name) ```rp_fqdn```, 
-  - Cluster admin account and password ```rp_admin_account_name``` and ```rp_admin_account_password```
-- Run ```create_cluster.sh``` to set up a cluster and create a sample database ```sample-db``` on port 12000
-  - You can view the cluster by visiting ```https://locahost:8443``` 
-
-- Connect to your database using ```redis-cli``` 
+# curl -k -u "cihan@redislabs.com:redislabs123" --request POST --url "https://localhost:9443/v1/bdbs" --header 'content-type: application/json' --data '{"name":"sample-db","type":"redis","memory_size":1073741824,"port":12000}'
 ```
-docker  exec -it <container name: default is rp1> bash
+
+To test the connection to the database, we will use the _redis-cli_ tool. Here is a simple set folowed by a get to validate the redis deployment.
 ```
+kubectl exec -it redispack-deployment-709212938-765lg bash
+# /opt/redislabs/bin/redis-cli -p 12000
+# 127.0.0.1:12000> set a 1
+# OK
+# 127.0.0.1:12000> get a
+# "1"
+# 127.0.0.1:12000>
 ```
-sudo /opt/redislabs/bin/redis-cli -p 12000
-127.0.0.1:16653> set key1 123
-OK
-127.0.0.1:16653> get key1
-“123”
-```
-Note: Use ```delete_cluster.sh``` to cleanup the sample.
+
+## Additional Information
