@@ -3,6 +3,14 @@ Kubernetes provides simple orchestration with containers and has been widely ada
 # What is Redis Enterprise Pack?
 Redis is the most popular database used with Docker containers. Redis Enterprise Pack extends open source Redis and delivers stable high performance, linear scaling and high availability with significant operational savings.
 
+We will use the Docker container for 4.5 version of Redis Enterprise Pack (Redis<sup>e</sup> Pack) for the steps here. You can find more information on the container image on [Docker Hub](https://hub.docker.com/r/redislabs/redis/) and see details on how to deploy the container locally with Docker below:
+* [Working with Redis Enterprise Pack and Docker](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/)
+* Getting Started with Redis Enterprise Pack and [Docker on Windows](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/windows/), 
+* Getting Started with Redis Enterprise Pack and [Docker on Mac OSx](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/macos/), 
+* Getting Started with Redis Enterprise Pack and [Docker on Linux](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/linux/)
+
+
+
 # Step by Step Deployment for (Redis<sup>e</sup> Pack) on Kubernetes on Google Cloud 
 We will go through 4 steps to set up our cluster with Redis Enterprise Pack (Redis<sup>e</sup> Pack)
 * Step #1 - Create a kubernetes cluster on Google Cloud
@@ -107,4 +115,11 @@ kubectl exec -it redispack-deployment-709212938-765lg bash
 # 127.0.0.1:12000>
 ```
 
-## Additional Information
+## Quick Links ##
+* [Working with Redis Enterprise Pack and Docker](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/)
+* Getting Started with Redis Enterprise Pack and [Docker on Windows](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/windows/), 
+* Getting Started with Redis Enterprise Pack and [Docker on Mac OSx](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/macos/), 
+* Getting Started with Redis Enterprise Pack and [Docker on Linux](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/linux/)
+* [Setting up a Redis Enterprise Pack Cluster](https://redislabs.com/redis-enterprise-documentation/initial-setup-creating-a-new-cluster/)
+* [Documentation](https://redislabs.com/resources/redis-pack-documentation/)
+* [How To Guides](https://redislabs.com/resources/how-to-redis-enterprise/)
