@@ -30,11 +30,11 @@ To define your kubernetes cluster, give it a name and keep the size of the clust
 
 Note: it may take a few mins to create the cluster. Ensure the kubernetes cluster creation is complete before proceeding to the next step.
 
-For best placement, we require Redis Enterprise Pack (Redis<sup>e</sup> Pack) pods to be placed on seperate kubernetes nodes. This ensures better availability when cluster nodes fail. Placing multiple Redis Enterprise Pack (Redis<sup>e</sup> Pack) nodes in the same physical host can cause multiple nodes to fail at once and may result in availability and data loss. To ensure we can garantee better placement, we need to upgrade the kubernetes cluster to **1.6.2** or better. You can do the upgrade in the details page of the kubernetes cluster deployment we just created. 
+For best placement, we require Redis Enterprise Pack (Redis<sup>e</sup> Pack) pods to be placed on separate kubernetes nodes. This ensures better availability when cluster nodes fail. Placing multiple Redis Enterprise Pack (Redis<sup>e</sup> Pack) nodes in the same physical host can cause multiple nodes to fail at once and may result in availability and data loss. To ensure we can guarantee better placement, we need to upgrade the kubernetes cluster to **1.6.2** or better. You can do the upgrade in the details page of the kubernetes cluster deployment we just created. 
 
 ![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/view-cluster.jpeg)
 
-Finally to finish the kubernetes deployment, you need to get the kubernetes console up and running and start the kubernetes proxy. on the terminal window, run the folowing commands;
+Finally to finish the kubernetes deployment, you need to get the kubernetes console up and running and start the kubernetes proxy. on the terminal window, run the following commands;
 ```
 gcloud auth login 
 ```
@@ -43,9 +43,11 @@ Connect to the kubernetes cluster
 gcloud container clusters get-credentials cluster-1 --zone europe-west1-c --project speedy-lattice-166011
 ```
 The output will read; 
+
 _# Fetching cluster endpoint and auth data._
 _# kubeconfig entry generated for cluster-1._
 And finally start the kubernetes cluster
+
 ```
 kubectl proxy
 ```
@@ -71,7 +73,7 @@ redispack-deployment-709212938-kcjd7   1/1       Running   0          7s
 ```
 
 ## Step #3 - Setup Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster
-We are now ready to create the Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster. There is one small change that needs to be done to the container to get networking to work properly: we need to change the css binding to 0.0.0.0. To do this you ned to run the following in each container with each iteration using the pods name from the _kubectl get po_ output above.
+We are now ready to create the Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster. There is one small change that needs to be done to the container to get networking to work properly: we need to change the css binding to 0.0.0.0. To do this, you need to run the following in each container with each iteration using the pods name from the _kubectl get po_ output above.
 ```
 kubectl exec -it redispack-deployment-709212938-765lg -- bash
 # sudo su -
@@ -79,7 +81,7 @@ kubectl exec -it redispack-deployment-709212938-765lg -- bash
 # cnm_ctl restart
 ```
 
-With this, lets provision the first node or the Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster.
+With this, let's provision the first node or the Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster.
 ```
 kubectl exec -it redispack-deployment-709212938-765lg "/opt/redislabs/bin/rladmin" cluster create name cluster.local username cihan@redislabs.com password redislabs123 flash_enabled
 ```
@@ -104,7 +106,7 @@ kubectl exec -it redispack-deployment-709212938-765lg bash
 # curl -k -u "cihan@redislabs.com:redislabs123" --request POST --url "https://localhost:9443/v1/bdbs" --header 'content-type: application/json' --data '{"name":"sample-db","type":"redis","memory_size":1073741824,"port":12000}'
 ```
 
-To test the connection to the database, we will use the _redis-cli_ tool. Here is a simple set folowed by a get to validate the redis deployment.
+To test the connection to the database, we will use the _redis-cli_ tool. Here is a simple set followed by a get to validate the redis deployment.
 ```
 kubectl exec -it redispack-deployment-709212938-765lg bash
 # /opt/redislabs/bin/redis-cli -p 12000
