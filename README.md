@@ -15,7 +15,16 @@ When performing the steps I used latest Google Cloud SDK - https://cloud.google.
 
 ## Step #1 - Create a kubernetes cluster on Google Cloud
 On your Google Cloud console, click on "Container Engine" option on the left nav and create a new cluster.
+![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/media/get-started.jpeg)
+
+To define your kubernetes cluster, give it a name and keep the size of the cluster to 3 nodes. we'll use all 3 nodes to deploy the Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster. I recommend you keep the size of nodes at least 2 cores and over 7GB RAM.
 ![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/media/create-cluster.jpeg)
+
+Note: it may take a few mins to create the cluster. Ensure the kubernetes cluster creation is complete before proceeding to the next step.
+
+For best placement, we require Redis Enterprise Pack (Redis<sup>e</sup> Pack) pods to be placed on seperate kubernetes nodes. This ensures better availability when cluster nodes fail. Placing multiple Redis Enterprise Pack (Redis<sup>e</sup> Pack) nodes in the same physical host can cause multiple nodes to fail at once and may result in availability and data loss. To ensure we can garantee better placement, we need to upgrade the kubernetes cluster to 1.6.2 or better. You can do the upgrade in the details page of the kubernetes cluster deployment we just created. 
+
+![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/media/view-cluster.jpeg)
 
 
   #note: upgrade the master cluster version to version 1.6.2
