@@ -19,7 +19,7 @@ We will go through 4 steps to set up our cluster with Redis Enterprise Pack (Red
 _Note: The deployment is deliberately simplified and is great for getting started with Kubernetes and Redis Enterprise Pack (Redis<sup>e</sup> Pack) fast. It certainly isn't intended for production use._
 
 ## Requirements
-When performing the steps, I used latest [Google Cloud SDK](https://cloud.google.com/sdk/) on MacOS. There may be slight differences with other operating systems.
+The steps below were performed using the latest [Google Cloud SDK](https://cloud.google.com/sdk/) on MacOS. There may be slight differences in detailed instructions with another operating system.
 
 ## Step #1 - Create a kubernetes cluster on Google Cloud
 On your Google Cloud console, click on "Container Engine" option on the left nav and create a new cluster.
@@ -30,7 +30,7 @@ To define your kubernetes cluster, give it a name and keep the size of the clust
 
 Note: it may take a few mins to create the cluster. Ensure the kubernetes cluster creation is complete before proceeding to the next step.
 
-For best placement, we require Redis Enterprise Pack (Redis<sup>e</sup> Pack) pods to be placed on separate kubernetes nodes. This ensures better availability when cluster nodes fail. Placing multiple Redis Enterprise Pack (Redis<sup>e</sup> Pack) nodes in the same physical host can cause multiple nodes to fail at once and may result in availability and data loss. To ensure we can guarantee better placement, we need to upgrade the kubernetes cluster to **1.6.2** or better. You can do the upgrade in the details page of the kubernetes cluster deployment we just created. 
+For best placement, Redis Enterprise Pack (Redis<sup>e</sup> Pack) pods should be placed on separate physical nodes in the Kubernetes cluster. This ensures better availabilityunder nodes failures. Placing multiple Redis Enterprise Pack (Redis<sup>e</sup> Pack) nodes in the same physical host can cause multiple nodes to fail at once and may result in availability and data loss. To ensure we can guarantee better placement, we need to upgrade the kubernetes cluster to **1.6.2** or better. You can do the upgrade in the details page of the kubernetes cluster deployment we just created. 
 
 ![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/view-cluster.jpeg)
 
