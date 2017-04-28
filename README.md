@@ -11,7 +11,7 @@ We will use the Docker container for 4.5 version of Redis Enterprise Pack (Redis
 
 
 
-# Step by Step Deployment for (Redis<sup>e</sup> Pack) on Kubernetes on Google Cloud 
+# Deploying (Redis<sup>e</sup> Pack) with Kubernetes on Google Cloud 
 We will go through 4 steps to set up our cluster with Redis Enterprise Pack (Redis<sup>e</sup> Pack)
 * Step #1 - Create a kubernetes cluster on Google Cloud
 * Step #2 - Deploy the Redis Enterprise Pack (Redis<sup>e</sup> Pack) containers to Kubernetes cluster
@@ -19,7 +19,7 @@ We will go through 4 steps to set up our cluster with Redis Enterprise Pack (Red
 * Step #4 - Create a Redis database and test your connectivity
 
 ## Requirements
-When performing the steps I used latest Google Cloud SDK - https://cloud.google.com/sdk/ on MacOS. There may be slight differences with other operating systems.
+When performing the steps, I used latest Google Cloud SDK - https://cloud.google.com/sdk/ on MacOS. There may be slight differences with other operating systems.
 
 ## Step #1 - Create a kubernetes cluster on Google Cloud
 On your Google Cloud console, click on "Container Engine" option on the left nav and create a new cluster.
