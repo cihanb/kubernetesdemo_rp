@@ -1,22 +1,22 @@
-Kubernetes provides simple orchestration with containers and has been widely adapted. It is simple to get a Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster on kubernetes with the new Redis Enterprise Pack Docker container. 
+Kubernetes provides simple orchestration with containers and has been widely adapted. It is simple to get a Redis Enterprise cluster on kubernetes with the new Redis Enterprise Docker container. 
 
 # What is Redis Enterprise Pack?
-Redis is the most popular database used with Docker containers. Redis Enterprise Pack extends open source Redis and delivers stable high performance, linear scaling and high availability with significant operational savings.
+Redis is the most popular database used with Docker containers. Redis Enterprise extends open source Redis and delivers stable high performance, linear scaling and high availability with significant operational savings. 
 
-We will use the Docker container for 4.5 version of Redis Enterprise Pack (Redis<sup>e</sup> Pack) for the steps here. You can find more information on the container image on [Docker Hub](https://hub.docker.com/r/redislabs/redis/) and see details on how to deploy the container locally with Docker below:
+We will use the Docker container for 4.5 version of Redis Enterprise for the steps here. You can find more information on the container image on [Docker Hub](https://hub.docker.com/r/redislabs/redis/) and see details on how to deploy the container locally with Docker below:
 * [Working with Redis Enterprise Pack and Docker](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/)
 * Getting Started with Redis Enterprise Pack and [Docker on Windows](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/windows/), 
 * Getting Started with Redis Enterprise Pack and [Docker on Mac OSx](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/macos/), 
 * Getting Started with Redis Enterprise Pack and [Docker on Linux](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/linux/)
 
-# Deploying (Redis<sup>e</sup> Pack) with Kubernetes on Google Cloud 
-We will go through 4 steps to set up our cluster with Redis Enterprise Pack (Redis<sup>e</sup> Pack)
+# Deploying Redis Enterprise with Kubernetes on Google Cloud 
+We will go through 4 steps to set up our cluster with Redis Enterprise
 * Step #1 - Create a kubernetes cluster on Google Cloud
-* Step #2 - Deploy the Redis Enterprise Pack (Redis<sup>e</sup> Pack) containers to Kubernetes cluster
-* Step #3 - Setup Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster
+* Step #2 - Deploy the Redis Enterprise containers to Kubernetes cluster
+* Step #3 - Setup Redis Enterprise cluster
 * Step #4 - Create a Redis database and test your connectivity
 
-_Note: The deployment is deliberately simplified and is great for getting started with Kubernetes and Redis Enterprise Pack (Redis<sup>e</sup> Pack) fast. It certainly isn't intended for production use._
+_Note: The deployment is deliberately simplified and is great for getting started with Kubernetes and Redis Enterprise fast. It certainly isn't intended for production use._
 
 ## Requirements
 The steps below were performed using the latest [Google Cloud SDK](https://cloud.google.com/sdk/) on MacOS. There may be slight differences in detailed instructions with another operating system.
@@ -25,12 +25,12 @@ The steps below were performed using the latest [Google Cloud SDK](https://cloud
 On your Google Cloud console, click on "Container Engine" option on the left nav and create a new cluster.
 ![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/get-started.jpeg)
 
-To define your kubernetes cluster, give it a name and keep the size of the cluster to 3 nodes. we'll use all 3 nodes to deploy the Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster. I recommend you keep the size of nodes at least 2 cores and over 7GB RAM.
+To define your kubernetes cluster, give it a name and keep the size of the cluster to 3 nodes. we'll use all 3 nodes to deploy the Redis Enterprise cluster. I recommend you keep the size of nodes at least 2 cores and over 7GB RAM.
 ![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/create-cluster.jpeg)
 
 Note: it may take a few mins to create the cluster. Ensure the kubernetes cluster creation is complete before proceeding to the next step.
 
-For best placement, Redis Enterprise Pack (Redis<sup>e</sup> Pack) pods should be placed on separate physical nodes in the Kubernetes cluster. This ensures better availabilityunder nodes failures. Placing multiple Redis Enterprise Pack (Redis<sup>e</sup> Pack) nodes in the same physical host can cause multiple nodes to fail at once and may result in availability and data loss. To ensure we can guarantee better placement, we need to upgrade the kubernetes cluster to **1.6.2** or better. You can do the upgrade in the details page of the kubernetes cluster deployment we just created. 
+For best placement, Redis Enterprise pods should be placed on separate physical nodes in the Kubernetes cluster. This ensures better availabilityunder nodes failures. Placing multiple Redis Enterprise nodes in the same physical host can cause multiple nodes to fail at once and may result in availability and data loss. To ensure we can guarantee better placement, we need to upgrade the kubernetes cluster to **1.6.2** or better. You can do the upgrade in the details page of the kubernetes cluster deployment we just created. 
 
 ![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/view-cluster.jpeg)
 
@@ -51,8 +51,8 @@ And finally start the kubernetes cluster
 ```
 kubectl proxy
 ```
-## Step #2 - Deploy the Redis Enterprise Pack (Redis<sup>e</sup> Pack) containers to Kubernetes cluster
-You now need to feed the container yaml file to provision Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster
+## Step #2 - Deploy the Redis Enterprise containers to Kubernetes cluster
+You now need to feed the container yaml file to provision Redis Enterprise cluster
 ```
 kubectl apply -f redis-enterprise.yaml
 ```
@@ -72,8 +72,8 @@ redispack-deployment-709212938-k8njr   1/1       Running   0          7s
 redispack-deployment-709212938-kcjd7   1/1       Running   0          7s
 ```
 
-## Step #3 - Setup Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster
-We are now ready to create the Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster. There is one small change that needs to be done to the container to get networking to work properly: we need to change the css binding to 0.0.0.0. To do this, you need to run the following in each container with each iteration using the pods name from the _kubectl get po_ output above.
+## Step #3 - Setup Redis Enterprise cluster
+We are now ready to create the Redis Enterprise cluster. There is one small change that needs to be done to the container to get networking to work properly: we need to change the css binding to 0.0.0.0. To do this, you need to run the following in each container with each iteration using the pods name from the _kubectl get po_ output above.
 ```
 kubectl exec -it redispack-deployment-709212938-765lg -- bash
 # sudo su -
@@ -81,7 +81,7 @@ kubectl exec -it redispack-deployment-709212938-765lg -- bash
 # cnm_ctl restart
 ```
 
-With this, let's provision the first node or the Redis Enterprise Pack (Redis<sup>e</sup> Pack) cluster.
+With this, let's provision the first node or the Redis Enterprise cluster.
 ```
 kubectl exec -it redispack-deployment-709212938-765lg "/opt/redislabs/bin/rladmin" cluster create name cluster.local username cihan@redislabs.com password redislabs123 flash_enabled
 ```
