@@ -10,7 +10,6 @@ spec:
         volume.alpha.kubernetes.io/storage-class: gce-storage
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      persistentVolumeReclaimPolicy: Recycle
       resources:
         requests:
           storage: 1Gi
