@@ -22,7 +22,26 @@ _Note: The deployment is deliberately simplified and is great for getting starte
 The steps below were performed using the latest [Google Cloud SDK](https://cloud.google.com/sdk/) on MacOS. There may be slight differences in detailed instructions with another operating system.
 
 ## Step #1 - Create a kubernetes cluster on Google Cloud
-On your Google Cloud console, click on "Container Engine" option on the left nav and create a new cluster.
+Lets first get your commandline environment set up. 
+* First authenticate to your Google Cloud environment. 
+```
+gcloud auth login 
+```
+
+* Get the default project_ID set. Here is how you can list and set the project context to be used by upcoming commands. 
+_Note that you will get some random name like mine (`speedy-lattice-166011`) if you have not explicitly specified an ID_
+```
+gcloud projects list
+gcloud config set project speedy-lattice-166011
+```
+
+* Finally, lets get the default zone/geography where you want your cluster set up. Again here is how you can list the zones and set the zone context to be used by upcoming commands.
+```
+gcloud compute zones list
+gcloud config set compute/zone europe-west1-c
+```
+
+Lets get the Kubernetes cluster up and running: On your Google Cloud console, click on "Container Engine" option on the left nav and create a new cluster.
 ![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/get-started.jpeg)
 
 To define your kubernetes cluster, give it a name and keep the size of the cluster to 3 nodes. we'll use all 3 nodes to deploy the Redis Enterprise cluster. I recommend you keep the size of nodes at least 2 cores and over 7GB RAM.
@@ -34,13 +53,17 @@ For best placement, Redis Enterprise pods should be placed on separate physical 
 
 ![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/view-cluster.jpeg)
 
+If you are a commandline kind of person, here is how you can simplfy the steps for creating the kubernetes cluster and upgrading it into 2 simple lines;
+```
+gcloud container clusters create cluster-1 --num-nodes=3 -m n1-standard-2
+gcloud container clusters upgrade cluster-1 --master --cluster-version=1.6.2
+```
+
 Finally to finish the kubernetes deployment, you need to get the kubernetes console up and running and start the kubernetes proxy. on the terminal window, run the following commands;
-```
-gcloud auth login 
-```
+
 Connect to the kubernetes cluster
 ```
-gcloud container clusters get-credentials cluster-1 --zone europe-west1-c --project speedy-lattice-166011
+gcloud container clusters get-credentials cluster-1
 ```
 The output will read; 
 
@@ -115,6 +138,11 @@ kubectl exec -it redispack-deployment-709212938-765lg bash
 # 127.0.0.1:12000> get a
 # "1"
 # 127.0.0.1:12000>
+```
+
+Note: To clean up the deployment you can simply delete the cluster using the following commandline
+```
+gcloud container clusters delete cluster-1
 ```
 
 ## Quick Links ##
