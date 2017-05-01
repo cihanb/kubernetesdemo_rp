@@ -23,7 +23,7 @@ spec:
             topologyKey: kubernetes.io/hostname #failure-domain.beta.kubernetes.io/zone
       containers:
       - name: redis
-        image: redislabs/redis:4.5.0-18
+        image: gcr.io/proj-1-1097/rlec-k8s:4.5.0-18.1
         ports:
         - containerPort: 8443
           containerPort: 26379

@@ -46,8 +46,8 @@ The output will read;
 
 _# Fetching cluster endpoint and auth data._
 _# kubeconfig entry generated for cluster-1._
-And finally start the kubernetes cluster
 
+And finally start the kubernetes proxy
 ```
 kubectl proxy
 ```
