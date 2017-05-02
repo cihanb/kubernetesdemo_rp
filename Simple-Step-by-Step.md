@@ -1,4 +1,4 @@
-Kubernetes provides simple orchestration with containers and has been widely adapted. It is simple to get a Redis Enterprise cluster on Kubernetes with the new Redis Enterprise Docker container. 
+Kubernetes provides simpler orchestration with containers and has been widely adapted. It is simple to get a Redis Enterprise cluster on Kubernetes with the new Redis Enterprise Docker container. 
 
 # What is Redis Enterprise?
 Redis is the most popular database used with Docker containers. Redis Enterprise extends open source Redis and delivers stable high performance, linear scaling and high availability with significant operational savings. 
@@ -75,7 +75,7 @@ And finally start the Kubernetes proxy
 kubectl proxy
 ```
 ## Step #2 - Deploy the Redis Enterprise containers to Kubernetes cluster
-You now need to feed the container yaml file to provision Redis Enterprise cluster
+You now need to feed the container yaml file to provision Redis Enterprise cluster. Sample YAML file can be found [here](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/redis-enterprise.yaml).
 ```
 kubectl apply -f redis-enterprise.yaml
 ```
