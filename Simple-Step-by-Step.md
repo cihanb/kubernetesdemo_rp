@@ -1,4 +1,4 @@
-Kubernetes provides simple orchestration with containers and has been widely adapted. It is simple to get a Redis Enterprise cluster on kubernetes with the new Redis Enterprise Docker container. 
+Kubernetes provides simple orchestration with containers and has been widely adapted. It is simple to get a Redis Enterprise cluster on Kubernetes with the new Redis Enterprise Docker container. 
 
 # What is Redis Enterprise?
 Redis is the most popular database used with Docker containers. Redis Enterprise extends open source Redis and delivers stable high performance, linear scaling and high availability with significant operational savings. 
@@ -11,7 +11,7 @@ We will use the Docker container for 4.5 version of Redis Enterprise for the ste
 
 # Deploying Redis Enterprise with Kubernetes on Google Cloud 
 We will go through 4 steps to set up our cluster with Redis Enterprise
-* Step #1 - Create a kubernetes cluster on Google Cloud
+* Step #1 - Create a Kubernetes cluster on Google Cloud
 * Step #2 - Deploy the Redis Enterprise containers to Kubernetes cluster
 * Step #3 - Setup Redis Enterprise cluster
 * Step #4 - Create a Redis database and test your connectivity
@@ -19,9 +19,9 @@ We will go through 4 steps to set up our cluster with Redis Enterprise
 _Note: The deployment is deliberately simplified and is great for getting started with Kubernetes and Redis Enterprise fast. It certainly isn't intended for production use._
 
 ## Requirements
-The steps below were performed using the latest [Google Cloud SDK](https://cloud.google.com/sdk/) on MacOS. There may be slight differences in detailed instructions with another operating system.
+The steps below were performed using the latest [Google Cloud sdk](https://cloud.google.com/sdk/) and [kubectl tool](https://kubernetes.io/docs/tasks/kubectl/install/) on MacOS. There may be slight differences in detailed instructions with another operating system.
 
-## Step #1 - Create a kubernetes cluster on Google Cloud
+## Step #1 - Create a Kubernetes cluster on Google Cloud
 Lets first get your commandline environment set up. 
 * First authenticate to your Google Cloud environment. 
 ```
@@ -44,24 +44,24 @@ gcloud config set compute/zone europe-west1-c
 Lets get the Kubernetes cluster up and running: On your Google Cloud console, click on "Container Engine" option on the left nav and create a new cluster.
 ![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/get-started.jpeg)
 
-To define your kubernetes cluster, give it a name and keep the size of the cluster to 3 nodes. we'll use all 3 nodes to deploy the Redis Enterprise cluster. I recommend you keep the size of nodes at least 2 cores and over 7GB RAM.
+To define your Kubernetes cluster, give it a name and keep the size of the cluster to 3 nodes. we'll use all 3 nodes to deploy the Redis Enterprise cluster. I recommend you keep the size of nodes at least 2 cores and over 7GB RAM.
 ![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/create-cluster.jpeg)
 
-Note: it may take a few mins to create the cluster. Ensure the kubernetes cluster creation is complete before proceeding to the next step.
+Note: it may take a few mins to create the cluster. Ensure the Kubernetes cluster creation is complete before proceeding to the next step.
 
-For best placement, Redis Enterprise pods should be placed on separate physical nodes in the Kubernetes cluster. This ensures better availabilityunder nodes failures. Placing multiple Redis Enterprise nodes in the same physical host can cause multiple nodes to fail at once and may result in availability and data loss. To ensure we can guarantee better placement, we need to upgrade the kubernetes cluster to **1.6.2** or better. You can do the upgrade in the details page of the kubernetes cluster deployment we just created. 
+For best placement, Redis Enterprise pods should be placed on separate physical nodes in the Kubernetes cluster. This ensures better availabilityunder nodes failures. Placing multiple Redis Enterprise nodes in the same physical host can cause multiple nodes to fail at once and may result in availability and data loss. To ensure we can guarantee better placement, we need to upgrade the Kubernetes cluster to **1.6.2** or better. You can do the upgrade in the details page of the Kubernetes cluster deployment we just created. 
 
 ![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/view-cluster.jpeg)
 
-If you are a commandline kind of person, here is how you can simplfy the steps for creating the kubernetes cluster and upgrading it into 2 simple lines;
+If you are a commandline kind of person, here is how you can simplfy the steps for creating the Kubernetes cluster and upgrading it into 2 simple lines;
 ```
 gcloud container clusters create cluster-1 --num-nodes=3 -m n1-standard-2
 gcloud container clusters upgrade cluster-1 --master --cluster-version=1.6.2
 ```
 
-Finally to finish the kubernetes deployment, you need to get the kubernetes console up and running and start the kubernetes proxy. on the terminal window, run the following commands;
+Finally to finish the Kubernetes deployment, you need to get the Kubernetes console up and running and start the Kubernetes proxy. on the terminal window, run the following commands;
 
-Connect to the kubernetes cluster
+Connect to the Kubernetes cluster
 ```
 gcloud container clusters get-credentials cluster-1
 ```
@@ -70,7 +70,7 @@ The output will read;
 _# Fetching cluster endpoint and auth data._
 _# kubeconfig entry generated for cluster-1._
 
-And finally start the kubernetes proxy
+And finally start the Kubernetes proxy
 ```
 kubectl proxy
 ```
@@ -83,7 +83,7 @@ If the deployment is successful, the output should look like this;
 _# deployment "redispack-deployment" created_
 _# service "redispack" created_
 
-You can now see the list of container nodes deployed on the kubernetes cluster. Simply run the following to see the list of nodes
+You can now see the list of container nodes deployed on the Kubernetes cluster. Simply run the following to see the list of nodes
 ```
 kubectl get po
 ```
