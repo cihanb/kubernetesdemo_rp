@@ -69,37 +69,31 @@ And finally start the kubernetes proxy
 kubectl proxy
 ```
 
-
----------------- IN PROGRESS BELOW -----------------------------------------------------------------------
 ## Step #2 - Deploy the Redis Enterprise containers to Kubernetes cluster
-You now need to feed the container yaml file to provision Redis Enterprise cluster
+You now need to feed the container yaml file to provision Redis Enterprise cluster. It is important to note that the container used for kubernetes is tuned for kubernetes used. It can be found under docker hub under redislabs/redis:kuber-4.5.0-18
 ```
-kubectl apply -f redis-enterprise.yaml
+kubectl apply -f redispack-headless.yaml
+kubectl apply -f redispack-service.yaml
+kubectl apply -f redispack-volumes.yaml
+kubectl create -f redispack-deployment.yaml
 ```
-If the deployment is successful, the output should look like this;
-_# deployment "redispack-deployment" created_
-_# service "redispack" created_
 
 You can now see the list of container nodes deployed on the kubernetes cluster. Simply run the following to see the list of nodes
 ```
 kubectl get po
 ```
+
 The output will look something like this;
 ```
-NAME                                   READY     STATUS    RESTARTS   AGE
-redispack-deployment-709212938-765lg   1/1       Running   0          7s
-redispack-deployment-709212938-k8njr   1/1       Running   0          7s
-redispack-deployment-709212938-kcjd7   1/1       Running   0          7s
+NAME          READY     STATUS    RESTARTS   AGE
+redispack-0   1/1       Running   0          3m
+redispack-1   1/1       Running   0          2m
 ```
 
+
+---------------- IN PROGRESS BELOW -----------------------------------------------------------------------
 ## Step #3 - Setup Redis Enterprise cluster
-We are now ready to create the Redis Enterprise cluster. There is one small change that needs to be done to the container to get networking to work properly: we need to change the css binding to 0.0.0.0. To do this, you need to run the following in each container with each iteration using the pods name from the _kubectl get po_ output above.
-```
-kubectl exec -it redispack-deployment-709212938-765lg -- bash
-# sudo su -
-# sed ‘s/bind 127.0.0.1/bind 0.0.0.0/g’ -i /opt/redislabs/config/ccs-redis.conf
-# cnm_ctl restart
-```
+We are now ready to create the Redis Enterprise cluster. 
 
 With this, let's provision the first node or the Redis Enterprise cluster.
 ```
