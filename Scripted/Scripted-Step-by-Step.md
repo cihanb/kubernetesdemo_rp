@@ -97,21 +97,19 @@ We are now ready to create the Redis Enterprise cluster.
 
 With this, let's provision the first node or the Redis Enterprise cluster.
 ```
-kubectl exec -it redispack-deployment-709212938-765lg "/opt/redislabs/bin/rladmin" cluster create name cluster.local username cihan@redislabs.com password redislabs123 flash_enabled
+kubectl exec -it redispack-0 "/opt/redislabs/bin/rladmin" cluster create name cluster.local username cihan@redislabs.com password redislabs123 flash_enabled
 ```
 
 We will need the ip address of the first node to be able to instruct the following nodes to join the cluster.
 ```
-kubectl exec -it redispack-deployment-709212938-765lg ifconfig | grep "inet addr"
+kubectl exec -it redispack-0 ifconfig | grep "inet addr"
 ```
 In my case the output was 10.0.2.10.
 Lets add node 2 and 3 to the cluster 
 ```
-kubectl exec -it redispack-deployment-709212938-k8njr "/opt/redislabs/bin/rladmin" cluster join username cihan@redislabs.com password redislabs123 nodes 10.0.2.10 flash_enabled
+kubectl exec -it redispack-1 "/opt/redislabs/bin/rladmin" cluster join username cihan@redislabs.com password redislabs123 nodes 10.0.2.10 flash_enabled
 ```
-```
-kubectl exec -it redispack-deployment-709212938-kcjd7 "/opt/redislabs/bin/rladmin" cluster join username cihan@redislabs.com password redislabs123 nodes 10.0.2.10 flash_enabled
-```
+
 
 ## Step #4 - Create a Redis database and test your connectivity
 We are now ready to create the database and connect to it. The following curl command can be used to create a database on port 12000. the database will be named _sample-db_.
