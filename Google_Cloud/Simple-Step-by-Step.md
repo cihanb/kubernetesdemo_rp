@@ -42,16 +42,16 @@ gcloud config set compute/zone europe-west1-c
 ```
 
 Lets get the Kubernetes cluster up and running: On your Google Cloud console, click on "Container Engine" option on the left nav and create a new cluster.
-![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/get-started.jpeg)
+![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/Google_Cloud/Media/get-started.jpeg)
 
 To define your Kubernetes cluster, give it a name and keep the size of the cluster to 3 nodes. we'll use all 3 nodes to deploy the Redis Enterprise cluster. I recommend you keep the size of nodes at least 2 cores and over 7GB RAM.
-![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/create-cluster.jpeg)
+![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/Google_Cloud/Media/create-cluster.jpeg)
 
 Note: it may take a few mins to create the cluster. Ensure the Kubernetes cluster creation is complete before proceeding to the next step.
 
 For best placement, Redis Enterprise pods should be placed on separate physical nodes in the Kubernetes cluster. This ensures better availabilityunder nodes failures. Placing multiple Redis Enterprise nodes in the same physical host can cause multiple nodes to fail at once and may result in availability and data loss. To ensure we can guarantee better placement, we need to upgrade the Kubernetes cluster to **1.6.2** or better. You can do the upgrade in the details page of the Kubernetes cluster deployment we just created. 
 
-![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/media/view-cluster.jpeg)
+![getting-started](https://raw.githubusercontent.com/cihanb/kubernetesdemo_rp/master/Google_Cloud/Media/view-cluster.jpeg)
 
 If you are a commandline kind of person, here is how you can simplfy the steps for creating the Kubernetes cluster and upgrading it into 2 simple lines;
 ```
