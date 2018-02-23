@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  template: 
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redislabs/redis:5.0.1-22-beta
+        ports:
+        - containerPort: 8001
+        - containerPort: 8443
+        - containerPort: 9443
+        securityContext:
+          capabilities:
+            add:
+              - SYS_RESOURCE
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  labels:
+    app: redis
+spec:
+  loadBalancerIP: 40.71.168.39
+  type: LoadBalancer
+  ports:
+  - port: 8001
+    targetPort: 8001
+    protocol: TCP
+    name: sentinal
+  - port: 8443
+    targetPort: 8443
+    protocol: TCP
+    name: ui
+  - port: 9443
+    targetPort: 9443
+    protocol: TCP
+    name: restapi
+  selector:
+    app: redis
