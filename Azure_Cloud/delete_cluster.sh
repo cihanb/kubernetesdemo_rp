@@ -32,7 +32,7 @@ echo $info_color"INFO"$no_color": First we need to log you in."
 az login -u $azure_account
 
 # check if resource group exists already
-exists=$az aks show -g $resource_group_name -n $aks_cluster_name --output table | grep $resource_group_name)
+exists=$(az aks show -g $resource_group_name -n $aks_cluster_name --output table | grep $resource_group_name)
 if [ "$exists" != '' ]
 then
     az aks show -g $resource_group_name -n $aks_cluster_name --output table
@@ -41,6 +41,8 @@ then
 
     if [ $yes_no == 'y' ]
     then
+        echo ""
+        echo ""
         echo $warning_color"WARNING"$no_color": Deleting AKS cluster "$aks_cluster_name" and resource group "$resource_group_name
         # delete the resource group
         az group delete -g $resource_group_name -y 
