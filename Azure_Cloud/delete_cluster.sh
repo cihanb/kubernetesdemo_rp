@@ -31,16 +31,22 @@ source ./my_private_settings.sh
 echo $info_color"INFO"$no_color": First we need to log you in."
 az login -u $azure_account
 
-# confirm delete
-az aks show -g $resource_group_name -n $aks_cluster_name --output table
-echo $warning_color"WARNING"$no_color": This will wipe out your AKS cluster nodes and delete all your data on containers [y/n]"
-read yes_no
-
-if [ $yes_no == 'y' ]
+# check if resource group exists already
+exists=$az aks show -g $resource_group_name -n $aks_cluster_name --output table | grep $resource_group_name)
+if [ "$exists" != '' ]
 then
-    echo $warning_color"WARNING"$no_color": Deleting AKS cluster "$aks_cluster_name"and resource group "$resource_group_name
-    # delete the resource group
-    az group delete $resource_group_name -y 
+    az aks show -g $resource_group_name -n $aks_cluster_name --output table
+    echo $warning_color"WARNING"$no_color": This will wipe out your AKS cluster nodes and delete all your data on containers [y/n]"
+    read yes_no
+
+    if [ $yes_no == 'y' ]
+    then
+        echo $warning_color"WARNING"$no_color": Deleting AKS cluster "$aks_cluster_name" and resource group "$resource_group_name
+        # delete the resource group
+        az group delete -g $resource_group_name -y 
+    else
+        echo $warning_color"WARNING"$no_color": Aborted deleting AKS cluster "$aks_cluster_name" and resource group "$resource_group_name
+    fi
 else
-    echo $warning_color"WARNING"$no_color": Aborted deleting AKS cluster "$aks_cluster_name"and resource group "$resource_group_name
+    echo $warning_color"WARNING"$no_color": No AKS cluster "$aks_cluster_name" under resource group "$resource_group_name
 fi
