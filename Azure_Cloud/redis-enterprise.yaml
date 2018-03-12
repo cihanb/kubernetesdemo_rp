@@ -7,11 +7,11 @@ spec:
   template: 
     metadata:
       labels:
-        app: redis
+        app: redis_enterprise
     spec:
       containers:
       - name: redis
-        image: redislabs/redis:5.0.1-22-beta
+        image: 
         ports:
         - containerPort: 8001
         - containerPort: 8443
@@ -27,9 +27,9 @@ kind: Service
 metadata:
   name: redis
   labels:
-    app: redis
+    app: redis_enterprise
 spec:
-  loadBalancerIP: 40.71.168.39
+  loadBalancerIP: ${ip}
   type: LoadBalancer
   ports:
   - port: 8001
@@ -45,4 +45,4 @@ spec:
     protocol: TCP
     name: restapi
   selector:
-    app: redis
+    app: redis_enterprise
