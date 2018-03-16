@@ -51,4 +51,4 @@ cmd="az network public-ip list --resource-group $rg --query [0].ipAddress --outp
 ip=$(eval $cmd)
 
 # #deploy redis enterpise
-sed -e "s/\${ip}/$ip/" -e "s/\${image}/$rp_image/" redis-enterprise.yaml | kubectl create -f -
+sed -e "s/\${ip}/$ip/" redis-enterprise.yaml | kubectl create -f -
