@@ -63,3 +63,7 @@ echo $info_color"INFO"$no_color": deploy redis enterprise"
 echo $info_color"INFO"$no_color": kubectl create -f redis-enterprise.yaml"
 echo ""
 sed -e "s/\${ip}/$ip/" redis-enterprise.yaml | kubectl create -f -
+
+
+echo "Get Started: Connect to your cluster at https://$ip:8443"
+echo "For more details on how to administer Redi Enterprise, visit - https://redislabs.com/redis-enterprise-documentation/overview/"
