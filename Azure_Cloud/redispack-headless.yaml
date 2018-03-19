@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redispack-headless
+  labels:
+    app: redispack-headless
+spec:
+  ports:
+  - port: 9443
+    name: ui
+  - port: 8001
+    name: sentinal
+  clusterIP: None
+  selector:
+    app: rp
