@@ -31,25 +31,25 @@ source ./my_private_settings.sh
 echo $info_color"INFO"$no_color": First we need to log you in."
 az login -u $azure_account > /dev/null
 
-# # create resource group
+# create resource group
 echo $info_color"INFO"$no_color": Creating the resource group "$resource_group_name" in "$location
 echo $info_color"INFO"$no_color": az group create --name $resource_group_name --location $location"
 echo ""
 az group create --name $resource_group_name --location $location > /dev/null
 
-# # create aks cluster
+# create aks cluster
 echo $info_color"INFO"$no_color": Creating the cluster "$aks_cluster_name
 echo $info_color"INFO"$no_color": az aks create --resource-group $resource_group_name  --name $aks_cluster_name --node-count $rp_total_nodes --generate-ssh-keys"
 echo ""
-az aks create --resource-group $resource_group_name  --name $aks_cluster_name --node-count $rp_total_nodes --generate-ssh-keys
+az aks create --resource-group $resource_group_name  --name $aks_cluster_name --node-count $rp_total_nodes --generate-ssh-keys --node-vm-size $rp_vm_sku
 
-# #get aks credentials
+# get aks credentials
 echo $info_color"INFO"$no_color": Save credentials"
 echo $info_color"INFO"$no_color": az aks get-credentials --resource-group $resource_group_name --name $aks_cluster_name"
 echo ""
 az aks get-credentials --resource-group $resource_group_name --name $aks_cluster_name
 
-# #create public IP
+# create public IP
 echo $info_color"INFO"$no_color": create a public IP"
 echo $info_color"INFO"$no_color": az network public-ip create --resource-group $rg --name redis-ip --allocation-method static"
 echo ""
@@ -58,8 +58,8 @@ az network public-ip create --resource-group $rg --name redis-ip --allocation-me
 cmd="az network public-ip list --resource-group $rg --query [0].ipAddress --output tsv"
 ip=$(eval $cmd)
 
-# #deploy redis enterpise
+# deploy redis enterpise
 echo $info_color"INFO"$no_color": deploy redis enterprise"
 echo $info_color"INFO"$no_color": kubectl create -f redis-enterprise.yaml"
 echo ""
-sed -e "s/\${ip}/$ip/" -e "s/\${image}/$rp_image/" redis-enterprise.yaml | kubectl create -f -
+sed -e "s/\${ip}/$ip/" redis-enterprise.yaml | kubectl create -f -

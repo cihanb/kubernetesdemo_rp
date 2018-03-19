@@ -1,14 +1,5 @@
 Kubernetes provides simpler orchestration with containers and has been widely adapted. It is simple to get a Redis Enterprise cluster on Kubernetes with the new Redis Enterprise Docker container. 
 
-# What is Redis Enterprise?
-Redis is the most popular database used with Docker containers. Redis Enterprise extends open source Redis and delivers stable high performance, linear scaling and high availability with significant operational savings. 
-
-We will use the Docker container for 4.5 version of Redis Enterprise for the steps here. You can find more information on the container image on [Docker Hub](https://hub.docker.com/r/redislabs/redis/) and see details on how to deploy the container locally with Docker below:
-* [Working with Redis Enterprise and Docker](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/)
-* Getting Started with Redis Enterprise and [Docker on Windows](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/windows/), 
-* Getting Started with Redis Enterprise and [Docker on Mac OSx](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/macos/), 
-* Getting Started with Redis Enterprise and [Docker on Linux](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/linux/)
-
 # Deploying Redis Enterprise with Kubernetes on Google Cloud 
 We will go through 4 steps to set up our cluster with Redis Enterprise
 * Step #1 - Create a Kubernetes cluster on Google Cloud

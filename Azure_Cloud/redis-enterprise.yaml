@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: redis
 spec:
-  replicas: 1
+  replicas: 3
   template: 
     metadata:
       labels:
@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: 
+        image: redislabs/redis:5.0.2-5.beta
         ports:
         - containerPort: 8001
         - containerPort: 8443
