@@ -7,7 +7,7 @@ We will go through 4 steps to set up our cluster with Redis Enterprise
 * Step #3 - Setup Redis Enterprise cluster
 * Step #4 - Create a Redis database and test your connectivity
 
-_Note: The deployment is deliberately simplified and is great for getting started with Kubernetes and Redis Enterprise fast. It certainly isn't intended for production use._
+_Note: The deployment is deliberately simplified and is great for getting started with Kubernetes and Redis Enterprise fast. Instructions are not intended for production usgrade deployments._
 
 ## Requirements
 The steps below were performed using the latest [Google Cloud sdk](https://cloud.google.com/sdk/) and [kubectl tool](https://kubernetes.io/docs/tasks/kubectl/install/) on MacOS. There may be slight differences in detailed instructions with another operating system.

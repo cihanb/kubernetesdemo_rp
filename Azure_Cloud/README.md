@@ -1,5 +1,17 @@
 You can use Redis Enterprise on Azure Container Services (AKS). For this example we'l be using OSx (MacOS) High Sierra and Azure CLI 2.0.
 
+# Deploying Redis Enterprise with Kubernetes on Google Cloud 
+It takes 4 steps to get a Redis Enterprise Cluster running under Azure AKS.
+* Step #1 - Create Azure resource group
+* Step #2 - Create a Kubernetes cluster on Google Cloud
+* Step #3 - Get an external IP for remote administration
+* Step #4 - Create Redis Enterprise Cluster deployment
+
+_Note: The deployment is deliberately simplified and is great for getting started with Kubernetes and Redis Enterprise fast. Instructions are not intended for production usgrade deployments._
+
+## Requirements
+The steps below were performed using the latest [Azure Cloud sdk](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) and [kubectl tool](https://kubernetes.io/docs/tasks/kubectl/install/) on MacOS. There may be slight differences in detailed instructions with another operating system.
+
 ### Step-1: Create an Azure resource group
 Resource group will hold all the related resources together under a single name. 
 ```
