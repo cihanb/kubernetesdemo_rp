@@ -80,7 +80,7 @@ jumpbox_vm_admin_account_password="redisl@bs123"
 #ubuntu OS image to use on azure
 rp_vm_image_name="Canonical:UbuntuServer:14.04.5-LTS:14.04.201802221"
 #cluster vm sku to use. Standard_D2 can be used as the minimum HW. 
-rp_vm_sku="Standard_D2"
+rp_vm_sku="Standard_D2_v2"
 #rp cluster vm admin account name
 rp_vm_admin_account_name="rl_vmadmin"
 

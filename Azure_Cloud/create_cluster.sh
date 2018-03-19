@@ -37,7 +37,7 @@ az group create --name $resource_group_name --location $location
 
 # # create aks cluster
 echo $info_color"INFO"$no_color": Creating the cluster "$aks_cluster_name
-az aks create --resource-group $resource_group_name  --name $aks_cluster_name --node-count $rp_total_nodes --generate-ssh-keys
+az aks create --resource-group $resource_group_name  --name $aks_cluster_name --node-count $rp_total_nodes --generate-ssh-keys --node-vm-size $rp_vm_sku
 
 # #get aks credentials
 echo $info_color"INFO"$no_color": Save credentials"
