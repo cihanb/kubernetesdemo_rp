@@ -1,7 +1,5 @@
 You can use Redis Enterprise on Azure Container Services (AKS). For this example we'l be using OSx (MacOS) High Sierra and Azure CLI 2.0.
 
-
-
 ### Step-1: Create an Azure resource group
 Resource group will hold all the related resources together under a single name. 
 ```

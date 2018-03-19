@@ -10,5 +10,5 @@ We will use the Docker container for 4.5 version of Redis Enterprise for the ste
 * Getting Started with Redis Enterprise and [Docker on Linux](https://redislabs.com/redis-enterprise-documentation/installing-and-upgrading/docker/linux/)
 
 ## Step-by-Step Instructions
-* Google Cloud: [step-by-step](Google_Cloud/Simple-Step-by-Step.md)
-* Azure Cloud Kubernetes Service: [step-by-step](Azure_Cloud/Simple-Step-by-Step.md)
+* Google Cloud: [step-by-step](Google_Cloud/README.md)
+* Azure Cloud Kubernetes Service: [step-by-step](Azure_Cloud/README.md)
